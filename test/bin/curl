@@ -1,3 +1,28 @@
 #! /bin/sh
 
-echo '1.2.3.4'
+case $@ in
+
+	'-fs http://v4.ident.me')
+		echo '1.2.3.4'
+		exit 0
+		;;
+
+	'-fs http://ipv4.myexternalip.com/raw')
+		exit 1
+		;;
+
+	'-fs http://v6.ident.me')
+		exit 1
+		;;
+
+	'-fs http://ipv6.myexternalip.com/raw')
+		echo 'fdbb:6b7e:49e8:0:b81d:14bb:aa2:ac7c'
+		exit 0
+		;;
+
+	'-k -K -')
+		read INPUT
+		echo "$INPUT"
+		exit 0
+		;;
+esac

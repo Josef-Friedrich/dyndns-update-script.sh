@@ -141,7 +141,6 @@ _get_external_ipv4() {
 	for SITE in $IPV4_SITES; do
 		IP="$(_get_external_ip "$SITE")"
 		IP="$(_check_ipv4 "$IP")"
-		echo "$IP" > $HOME/debug
 		if [ -n "$IP" ]; then
 			break
 		fi
@@ -192,7 +191,7 @@ fi
 
 if [ -n "$OPT_IPV6" ] && [ -z "$OPT_DEVICE" ]; then
 	echo "-6 needs a device (-d)"
-	exit 1
+	exit 23
 fi
 
 if [ -n "$OPT_IPV4" ]; then
@@ -203,7 +202,7 @@ if [ -n "$OPT_IPV6" ]; then
 	QUERY_IPV6="&ipv6=$(_get_ipv6)"
 fi
 
-BASE_URL='https://${JFDDNS_DOMAIN}/update-by-query'
+BASE_URL="https://${JFDDNS_DOMAIN}/update-by-query"
 URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
 
 QUERY_RECORD="&record_name=$OPT_RECORD"
