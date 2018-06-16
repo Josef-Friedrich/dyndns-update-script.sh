@@ -1,0 +1,1 @@
+# jfddns-update-script.sh
