@@ -198,14 +198,17 @@ if [ -n "$OPT_IPV6" ] && [ -z "$OPT_DEVICE" ]; then
 fi
 
 if [ -n "$OPT_IPV4" ]; then
-	QUERY_IPV4="&ipv4=$(_get_external_ipv4)"
+	IPV4="$(_get_external_ipv4)"
+	if [ -n "$IPV4" ]; then
+		QUERY_IPV4="&ipv4=$IPV4"
+	fi
 fi
 
 if [ -n "$OPT_IPV6" ]; then
 	IPV6="$(_get_ipv6)"
 	IPV6="$(_check_ipv6 "$IPV6")"
 	if [ -n "$IPV6" ]; then
-		QUERY_IPV6="&ipv6=$(_get_ipv6)"
+		QUERY_IPV6="&ipv6=$IPV6"
 	fi
 fi
 
