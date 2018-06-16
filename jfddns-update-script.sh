@@ -199,17 +199,9 @@ if [ -n "$OPT_IPV6" ]; then
 	QUERY_IPV6="&ipv6=$(_get_ipv6)"
 fi
 
-if [ ! -f /etc/os-release ]; then
-	ECHO=echo
-else
-	# OpenWrt
-	ECHO=/bin/echo
-fi
-
-
 BASE_URL='https://${JFDDNS_DOMAIN}/update-by-query'
 URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
 
 QUERY_RECORD="&record_name=$OPT_RECORD"
 
-$ECHO url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}" | /usr/bin/curl -k -K -
+echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}" | curl -k -K -
