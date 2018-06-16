@@ -56,6 +56,8 @@ Options:
 
 "
 
+# https://github.com/phoemur/ipgetter/blob/master/ipgetter.py
+
 IPV4_SITES="http://v4.ident.me
 http://ipv4.myexternalip.com/raw"
 
@@ -114,6 +116,10 @@ _getopts() {
 	GETOPTS_SHIFT=$((OPTIND - 1))
 }
 
+_get_external_ip() {
+	curl -fs "$1"
+}
+
 ########################################################################
 
 # _get_ipv4() {
@@ -126,14 +132,21 @@ _getopts() {
 # 		sed -e 's/.*inet \([.0-9]*\).*/\1/'
 # }
 
-# https://github.com/phoemur/ipgetter/blob/master/ipgetter.py
-_get_external_ipv4() {
-	# http://myexternalip.com/raw
-	/usr/bin/curl -fs http://v4.ident.me
+_check_ipv4() {
+	echo "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
 }
 
-_get_external_ip() {
-	curl -fs "$1"
+_get_external_ipv4() {
+	local IP
+	for SITE in $IPV4_SITES; do
+		IP="$(_get_external_ip "$SITE")"
+		IP="$(_check_ipv4 "$IP")"
+		echo "$IP" > $HOME/debug
+		if [ -n "$IP" ]; then
+			break
+		fi
+	done
+	echo "$IP"
 }
 
 ########################################################################

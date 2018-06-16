@@ -16,3 +16,20 @@ setup() {
 		_get_external_ip "$SITE"
 	done
 }
+
+@test "_check_ipv4 1.2.3.4" {
+	run _check_ipv4 1.2.3.4
+	[ "$status" -eq 0 ]
+	[ "${lines[0]}" = '1.2.3.4' ]
+}
+
+@test "_check_ipv4 lol" {
+	run _check_ipv4 lol
+	[ "$status" -eq 1 ]
+	[ "${lines[0]}" = '' ]
+}
+
+@test "_get_external_ipv4" {
+	IP=$(_get_external_ipv4)
+	[ -n "$IP" ]
+}
