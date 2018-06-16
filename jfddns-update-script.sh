@@ -31,7 +31,7 @@ ZONE='subdomain.example.com'
 FIRST_RELEASE=2018-06-16
 VERSION=1.0
 PROJECT_PAGES="https://github.com/Josef-Friedrich/jfddns-update-script.sh"
-SHORT_DESCRIPTION='A shell script to update the DNS records using the jfddns HTTP web API.'
+SHORT_DESCRIPTION='A shell script to update DNS records using the jfddns HTTP web API.'
 
 NAME="jfddns-update-script.sh"
 USAGE="Usage: $NAME [-46dhrt] <record-name>
