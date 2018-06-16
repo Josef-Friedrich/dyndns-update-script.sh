@@ -36,7 +36,7 @@ SHORT_DESCRIPTION='A shell script to update DNS records using the jfddns HTTP we
 NAME="jfddns-update-script.sh"
 USAGE="$NAME v$VERSION
 
-Usage: $NAME [-46dhrt] <record-name>
+Usage: $NAME [-46dhstv] <record-name>
 
 $SHORT_DESCRIPTION
 
@@ -51,9 +51,12 @@ Options:
 	  The interface (device to look for an IP address), e. g. “eth0”
 	-h, --help
 	  Show this help message.
+	-s, --short-description
+	  Show a short description / summary.
 	-t, --ttl
-	  Time to live for updated record; default 3600s., e. g. “300”
-
+	  Time to live for updated record; e. g. “300”
+	-v, --version
+	  Show the version number of this script.
 "
 
 # https://github.com/phoemur/ipgetter/blob/master/ipgetter.py
@@ -199,7 +202,11 @@ if [ -n "$OPT_IPV4" ]; then
 fi
 
 if [ -n "$OPT_IPV6" ]; then
-	QUERY_IPV6="&ipv6=$(_get_ipv6)"
+	IPV6="$(_get_ipv6)"
+	IPV6="$(_check_ipv6 "$IPV6")"
+	if [ -n "$IPV6" ]; then
+		QUERY_IPV6="&ipv6=$(_get_ipv6)"
+	fi
 fi
 
 BASE_URL="https://${JFDDNS_DOMAIN}/update-by-query"
