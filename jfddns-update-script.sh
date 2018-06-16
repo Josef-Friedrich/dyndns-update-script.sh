@@ -56,6 +56,12 @@ Options:
 
 "
 
+IPV4_SITES="http://v4.ident.me
+http://ipv4.myexternalip.com/raw"
+
+IPV6_SITES="http://v6.ident.me
+http://ipv6.myexternalip.com/raw"
+
 # See https://stackoverflow.com/a/28466267
 
 # Exit codes
@@ -124,6 +130,10 @@ _getopts() {
 _get_external_ipv4() {
 	# http://myexternalip.com/raw
 	/usr/bin/curl -fs http://v4.ident.me
+}
+
+_get_external_ip() {
+	curl -fs "$1"
 }
 
 ########################################################################
