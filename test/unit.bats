@@ -45,6 +45,18 @@ setup() {
 	[ -n "$IP" ]
 }
 
+@test "_check_ipv6 fe80::42:80ff:fe3b:860a" {
+	run _check_ipv6 fe80::42:80ff:fe3b:860a
+	[ "$status" -eq 0 ]
+	[ "${lines[0]}" = 'fe80::42:80ff:fe3b:860a' ]
+}
+
+@test "_check_ipv6 lol" {
+	run _check_ipv6 lol
+	[ "$status" -eq 1 ]
+	[ "${lines[0]}" = '' ]
+}
+
 @test "_get_ipv6" {
 	OPT_DEVICE='XXX'
 	run _get_ipv6
