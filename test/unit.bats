@@ -11,6 +11,14 @@ setup() {
 	done
 }
 
+@test "test http://v4.ident.me" {
+	curl -fs http://v4.ident.me
+}
+
+@test "test http://ipv4.myexternalip.com/raw" {
+	curl -fs http://ipv4.myexternalip.com/raw
+}
+
 @test "IPV6_SITES" {
 	if ! ping6 -c 1 ipv6.google.com > /dev/null 2>&1 ; then
 		skip
