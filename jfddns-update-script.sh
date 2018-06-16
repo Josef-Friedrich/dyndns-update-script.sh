@@ -34,7 +34,9 @@ PROJECT_PAGES="https://github.com/Josef-Friedrich/jfddns-update-script.sh"
 SHORT_DESCRIPTION='A shell script to update DNS records using the jfddns HTTP web API.'
 
 NAME="jfddns-update-script.sh"
-USAGE="Usage: $NAME [-46dhrt] <record-name>
+USAGE="$NAME v$VERSION
+
+Usage: $NAME [-46dhrt] <record-name>
 
 $SHORT_DESCRIPTION
 
@@ -68,6 +70,8 @@ _getopts() {
 			d) OPT_DEVICE="$OPTARG" ;;
 			h) echo "$USAGE" ; exit 0 ;;
 			t) OPT_TTL="$OPTARG" ;;
+			s) echo "$SHORT_DESCRIPTION" ; exit 0 ;;
+			v) echo "$VERSION" ; exit 0 ;;
 			\?) echo "Invalid option “-$OPTARG”!" >&2 ; exit 2 ;;
 			:) echo "Option “-$OPTARG” requires an argument!" >&2 ; exit 3 ;;
 
@@ -79,14 +83,16 @@ _getopts() {
 					ipv6-only) OPT_IPV6=1 ;;
 					device=?*) OPT_DEVICE="$LONG_OPTARG" ;;
 					help) echo "$USAGE" ; exit 0 ;;
+					short-description) echo "$SHORT_DESCRIPTION" ; exit 0 ;;
 					ttl=?*) OPT_TTL="$LONG_OPTARG" ;;
+					version) echo "$VERSION" ; exit 0 ;;
 
 					device*|ttl*)
 						echo "Option “--$OPTARG” requires an argument!" >&2
 						exit 3
 						;;
 
-					ipv4-only*|ipv6-only*|help*)
+					ipv4-only*|ipv6-only*|help*|short-description*|version*)
 						echo "No argument allowed for the option “--$OPTARG”!" >&2
 						exit 4
 						;;
