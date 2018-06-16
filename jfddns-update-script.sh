@@ -1,12 +1,44 @@
 #! /bin/sh
 
-ZONE='dyndns.example.com'
+JFDDNS_DOMAIN='dyndns.example.com'
 SECRET='12345678'
+ZONE='subdomain.example.com'
+
+
+# MIT License
+#
+# Copyright (c) 2018 Josef Friedrich <josef@friedrich.rocks>
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+FIRST_RELEASE=2018-06-16
+VERSION=1.0
+PROJECT_PAGES="https://github.com/Josef-Friedrich/jfddns-update-script.sh"
+SHORT_DESCRIPTION='A shell script to update the DNS records using the jfddns HTTP web API.'
 
 NAME="jfddns-update-script.sh"
-USAGE="$NAME
+USAGE="Usage: $NAME [-46dhrt] <record-name>
 
-Usage: $NAME [-46dhrt] <record-name>
+$SHORT_DESCRIPTION
+
+https://github.com/Josef-Friedrich/jfddns
 
 Options:
 	-4, --ipv4-only
@@ -146,7 +178,7 @@ else
 fi
 
 
-BASE_URL='https://dyndns.friedrich.rocks/update-by-query'
+BASE_URL='https://${JFDDNS_DOMAIN}/update-by-query'
 URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
 
 QUERY_RECORD="&record_name=$OPT_RECORD"
