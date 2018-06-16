@@ -71,7 +71,7 @@ http://ipv6.myexternalip.com/raw"
 # Missing argument: 3
 # No argument allowed: 4
 _getopts() {
-	while getopts ':46d:hk:l:n:r:st:vz:-:' OPT ; do
+	while getopts ':46d:hst:v-:' OPT ; do
 		case $OPT in
 			4) OPT_IPV4=1 ;;
 			6) OPT_IPV6=1 ;;
@@ -178,7 +178,7 @@ OPT_RECORD="$1"
 
 if [ -z "$OPT_RECORD" ]; then
 	echo "$USAGE"
-	exit 1
+	exit 17
 fi
 
 if [ -z "$OPT_IPV4" ] && [ -z "$OPT_IPV6" ]; then

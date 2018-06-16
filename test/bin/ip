@@ -1,0 +1,15 @@
+#! /bin/sh
+
+# ip -6 addr list scope global wlp3s0
+
+echo "3: wlp3s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+    inet6 fd60:fa1a:55e5::ca7/128 scope global
+       valid_lft forever preferred_lft forever
+    inet6 200c:ef45:4c06:3300:b832:fe2d:bb21:60bd/64 scope global temporary dynamic
+       valid_lft 12165sec preferred_lft 12165sec
+    inet6 200c:ef45:4c06:3300:224:d7ff:feec:2420/64 scope global mngtmpaddr noprefixroute dynamic
+       valid_lft 12165sec preferred_lft 12165sec
+    inet6 fd60:fa1a:55e5:0:b832:fe2d:bb21:60bd/64 scope global temporary dynamic
+       valid_lft 602854sec preferred_lft 84031sec"
+
+exit 0

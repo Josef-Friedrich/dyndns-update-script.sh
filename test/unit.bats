@@ -12,6 +12,9 @@ setup() {
 }
 
 @test "IPV6_SITES" {
+	if ! ping6 -c 1 ipv6.google.com > /dev/null 2>&1 ; then
+		skip
+	fi
 	for SITE in $IPV6_SITES; do
 		_get_external_ip "$SITE"
 	done
@@ -32,4 +35,20 @@ setup() {
 @test "_get_external_ipv4" {
 	IP=$(_get_external_ipv4)
 	[ -n "$IP" ]
+}
+
+@test "_get_ipv6" {
+	OPT_DEVICE='XXX'
+	run _get_ipv6
+	[ "$status" -eq 0 ]
+
+	mock_path test/bin
+	IPV6="$(_get_ipv6)"
+	[ "$IPV6" = '200c:ef45:4c06:3300:b832:fe2d:bb21:60bd' ]
+}
+
+@test "_get_ipv6: no device" {
+	run _get_ipv6
+	[ "$status" -eq 9 ]
+	[ "${lines[0]}" = "No device given!" ]
 }
