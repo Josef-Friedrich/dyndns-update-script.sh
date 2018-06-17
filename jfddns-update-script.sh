@@ -123,7 +123,11 @@ _get_external_ip() {
 	curl -fs "$1"
 }
 
-########################################################################
+### ipv4 ###############################################################
+
+_check_ipv4() {
+	echo "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
+}
 
 # _get_ipv4() {
 # 	if [ -z "$OPT_DEVICE" ] ; then
@@ -135,11 +139,7 @@ _get_external_ip() {
 # 		sed -e 's/.*inet \([.0-9]*\).*/\1/'
 # }
 
-_check_ipv4() {
-	echo "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
-}
-
-_get_external_ipv4() {
+_get_ipv4_external() {
 	local IP
 	for SITE in $IPV4_SITES; do
 		IP="$(_get_external_ip "$SITE")"
@@ -151,13 +151,13 @@ _get_external_ipv4() {
 	echo "$IP"
 }
 
-########################################################################
+### ipv6 ###############################################################
 
 _check_ipv6() {
 	echo "$1" | grep -E '(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))'
 }
 
-_get_ipv6() {
+_get_ipv6_internal() {
 	if [ -z "$OPT_DEVICE" ] ; then
 		echo "No device given!" >&2
 		exit 9
@@ -167,12 +167,17 @@ _get_ipv6() {
 		sed -n 's/.*inet6 \([0-9a-f:]\+\).*/\1/p' | head -n 1
 }
 
-# _get_external_ipv6() {
-# 	/usr/bin/curl -fs http://v6.ident.me
-# }
-
-########################################################################
-
+_get_ipv6_external() {
+	local IP
+	for SITE in $IPV6_SITES; do
+		IP="$(_get_external_ip "$SITE")"
+		IP="$(_check_ipv6 "$IP")"
+		if [ -n "$IP" ]; then
+			break
+		fi
+	done
+	echo "$IP"
+}
 
 ## This SEPARATOR is required for test purposes. Please don’t remove! ##
 
@@ -196,7 +201,7 @@ if [ -n "$OPT_IPV6" ] && [ -z "$OPT_DEVICE" ]; then
 fi
 
 if [ -n "$OPT_IPV4" ]; then
-	IPV4="$(_get_external_ipv4)"
+	IPV4="$(_get_ipv4_external)"
 	IPV4="$(_check_ipv4 "$IPV4")"
 	if [ -n "$IPV4" ]; then
 		QUERY_IPV4="&ipv4=$IPV4"
@@ -204,7 +209,7 @@ if [ -n "$OPT_IPV4" ]; then
 fi
 
 if [ -n "$OPT_IPV6" ]; then
-	IPV6="$(_get_ipv6)"
+	IPV6="$(_get_ipv6_internal)"
 	IPV6="$(_check_ipv6 "$IPV6")"
 	if [ -n "$IPV6" ]; then
 		QUERY_IPV6="&ipv6=$IPV6"

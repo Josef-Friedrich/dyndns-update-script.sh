@@ -40,8 +40,8 @@ setup() {
 	[ "${lines[0]}" = '' ]
 }
 
-@test "_get_external_ipv4" {
-	IP=$(_get_external_ipv4)
+@test "_get_ipv4_external" {
+	IP=$(_get_ipv4_external)
 	[ -n "$IP" ]
 }
 
@@ -57,18 +57,18 @@ setup() {
 	[ "${lines[0]}" = '' ]
 }
 
-@test "_get_ipv6" {
+@test "_get_ipv6_internal" {
 	OPT_DEVICE='XXX'
-	run _get_ipv6
+	run _get_ipv6_internal
 	[ "$status" -eq 0 ]
 
 	mock_path test/bin
-	IPV6="$(_get_ipv6)"
+	IPV6="$(_get_ipv6_internal)"
 	[ "$IPV6" = '200c:1:2:c3::1' ]
 }
 
-@test "_get_ipv6: no device" {
-	run _get_ipv6
+@test "_get_ipv6_internal: no device" {
+	run _get_ipv6_internal
 	[ "$status" -eq 9 ]
 	[ "${lines[0]}" = "No device given!" ]
 }
