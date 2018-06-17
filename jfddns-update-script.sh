@@ -129,15 +129,15 @@ _check_ipv4() {
 	echo "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
 }
 
-# _get_ipv4() {
-# 	if [ -z "$OPT_DEVICE" ] ; then
-# 		echo "No device given!" >&2
-# 		exit 9
-# 	fi
-# 	ip -4 addr show dev $OPT_DEVICE | \
-# 		grep inet | \
-# 		sed -e 's/.*inet \([.0-9]*\).*/\1/'
-# }
+_get_ipv4_internal() {
+	if [ -z "$OPT_DEVICE" ]; then
+		echo "No device given!" >&2
+		exit 9
+	fi
+	ip -4 addr show dev "$OPT_DEVICE "| \
+		grep inet | \
+		sed -e 's/.*inet \([.0-9]*\).*/\1/'
+}
 
 _get_ipv4_external() {
 	local IP
@@ -162,7 +162,7 @@ _get_ipv6_internal() {
 		echo "No device given!" >&2
 		exit 9
 	fi
-	ip -6 addr list scope global $OPT_DEVICE | \
+	ip -6 addr list scope global "$OPT_DEVICE" | \
 		grep -v " fd" | \
 		sed -n 's/.*inet6 \([0-9a-f:]\+\).*/\1/p' | head -n 1
 }
@@ -194,11 +194,6 @@ if [ -z "$OPT_IPV4" ] && [ -z "$OPT_IPV6" ]; then
 	OPT_IPV4=1
 	OPT_IPV6=1
 fi
-
-# if [ -n "$OPT_IPV6" ] && [ -z "$OPT_DEVICE" ]; then
-# 	echo "-6 needs a device (-d)"
-# 	exit 23
-# fi
 
 if [ -n "$OPT_IPV4" ]; then
 	IPV4="$(_get_ipv4_external)"

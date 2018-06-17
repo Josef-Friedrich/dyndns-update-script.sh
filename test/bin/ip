@@ -1,8 +1,9 @@
 #! /bin/sh
 
-# ip -6 addr list scope global wlp3s0
+case $@ in
 
-echo "3: wlp3s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+	'-6 addr list scope global eth0')
+		echo "3: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
     inet6 fd60:fa1a:55e5::ca7/128 scope global
        valid_lft forever preferred_lft forever
     inet6 200c:1:2:c3::1/64 scope global temporary dynamic
@@ -11,5 +12,14 @@ echo "3: wlp3s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
        valid_lft 12165sec preferred_lft 12165sec
     inet6 fd60:fa1a:55e5:0:b832:fe2d:bb21:60bd/64 scope global temporary dynamic
        valid_lft 602854sec preferred_lft 84031sec"
+		exit 0
+		;;
 
-exit 0
+	'-4 addr show dev eth0')
+		echo "2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    inet 192.168.3.105/24 brd 192.168.3.255 scope global dynamic noprefixroute wlp1s0
+       valid_lft 31535529sec preferred_lft 31535529sec"
+		exit 0
+		;;
+
+esac

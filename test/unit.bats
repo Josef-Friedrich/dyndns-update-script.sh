@@ -58,7 +58,7 @@ setup() {
 }
 
 @test "_get_ipv6_internal" {
-	OPT_DEVICE='XXX'
+	OPT_DEVICE='eth0'
 	run _get_ipv6_internal
 	[ "$status" -eq 0 ]
 
