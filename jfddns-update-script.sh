@@ -195,10 +195,10 @@ if [ -z "$OPT_IPV4" ] && [ -z "$OPT_IPV6" ]; then
 	OPT_IPV6=1
 fi
 
-if [ -n "$OPT_IPV6" ] && [ -z "$OPT_DEVICE" ]; then
-	echo "-6 needs a device (-d)"
-	exit 23
-fi
+# if [ -n "$OPT_IPV6" ] && [ -z "$OPT_DEVICE" ]; then
+# 	echo "-6 needs a device (-d)"
+# 	exit 23
+# fi
 
 if [ -n "$OPT_IPV4" ]; then
 	IPV4="$(_get_ipv4_external)"
@@ -209,7 +209,12 @@ if [ -n "$OPT_IPV4" ]; then
 fi
 
 if [ -n "$OPT_IPV6" ]; then
-	IPV6="$(_get_ipv6_internal)"
+	if [ -n "$OPT_DEVICE" ]; then
+		IPV6="$(_get_ipv6_internal)"
+	fi
+	if [ -z "$IPV6" ]; then
+		IPV6="$(_get_ipv6_external)"
+	fi
 	IPV6="$(_check_ipv6 "$IPV6")"
 	if [ -n "$IPV6" ]; then
 		QUERY_IPV6="&ipv6=$IPV6"

@@ -16,7 +16,7 @@ case $@ in
 		;;
 
 	'-fs http://ipv6.myexternalip.com/raw')
-		echo 'fdbb:6b7e:49e8:0:b81d:14bb:aa2:ac7c'
+		echo '200c:6b7e:49e8:0::1'
 		exit 0
 		;;
 
