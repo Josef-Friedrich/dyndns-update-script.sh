@@ -1,7 +1,7 @@
 #! /bin/sh
 
 JFDDNS_DOMAIN='dyndns.example.com'
-SECRET='12345678'
+SECRET='123'
 ZONE='sub.example.com'
 
 
