@@ -17,7 +17,13 @@ case $@ in
 
 	'-4 addr show dev eth0')
 		echo "2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-    inet 192.168.3.105/24 brd 192.168.3.255 scope global dynamic noprefixroute wlp1s0
+    inet 192.168.3.105/24 brd 192.168.3.255 scope global dynamic noprefixroute eth0
+       valid_lft 31535529sec preferred_lft 31535529sec
+    inet 10.168.3.105/24 brd 192.168.3.255 scope global dynamic noprefixroute eth0
+       valid_lft 31535529sec preferred_lft 31535529sec
+    inet 172.168.3.105/24 brd 192.168.3.255 scope global dynamic noprefixroute eth0
+       valid_lft 31535529sec preferred_lft 31535529sec
+    inet 1.2.3.4/24 brd 192.168.3.255 scope global dynamic noprefixroute eth0
        valid_lft 31535529sec preferred_lft 31535529sec"
 		exit 0
 		;;

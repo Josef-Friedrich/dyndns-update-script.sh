@@ -129,15 +129,16 @@ _check_ipv4() {
 	echo "$1" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
 }
 
-_get_ipv4_internal() {
-	if [ -z "$OPT_DEVICE" ]; then
-		echo "No device given!" >&2
-		exit 9
-	fi
-	ip -4 addr show dev "$OPT_DEVICE" | \
-		grep inet | \
-		sed -e 's/.*inet \([.0-9]*\).*/\1/'
-}
+# _get_ipv4_internal() {
+# 	if [ -z "$OPT_DEVICE" ]; then
+# 		echo "No device given!" >&2
+# 		exit 9
+# 	fi
+# 	ip -4 addr show dev "$OPT_DEVICE" | \
+# 		grep inet | \
+# 		grep -v " 192.168." | \
+# 		sed -e 's/.*inet \([.0-9]*\).*/\1/'
+# }
 
 _get_ipv4_external() {
 	local IP
