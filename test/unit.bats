@@ -57,6 +57,26 @@ setup() {
 	[ "${lines[0]}" = '' ]
 }
 
+# _get_ipv4_internal
+
+@test "_get_ipv4_internal" {
+	OPT_DEVICE='eth0'
+	run _get_ipv4_internal
+	[ "$status" -eq 0 ]
+
+	mock_path test/bin
+	IPV6="$(_get_ipv4_internal)"
+	[ "$IPV6" = '192.168.3.105' ]
+}
+
+@test "_get_ipv4_internal: no device" {
+	run _get_ipv4_internal
+	[ "$status" -eq 9 ]
+	[ "${lines[0]}" = "No device given!" ]
+}
+
+# _get_ipv6_internal
+
 @test "_get_ipv6_internal" {
 	OPT_DEVICE='eth0'
 	run _get_ipv6_internal

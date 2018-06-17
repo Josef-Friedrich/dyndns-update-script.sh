@@ -134,7 +134,7 @@ _get_ipv4_internal() {
 		echo "No device given!" >&2
 		exit 9
 	fi
-	ip -4 addr show dev "$OPT_DEVICE "| \
+	ip -4 addr show dev "$OPT_DEVICE" | \
 		grep inet | \
 		sed -e 's/.*inet \([.0-9]*\).*/\1/'
 }
