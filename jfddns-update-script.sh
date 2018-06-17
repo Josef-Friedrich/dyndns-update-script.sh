@@ -199,6 +199,7 @@ fi
 
 if [ -n "$OPT_IPV4" ]; then
 	IPV4="$(_get_external_ipv4)"
+	IPV4="$(_check_ipv4 "$IPV4")"
 	if [ -n "$IPV4" ]; then
 		QUERY_IPV4="&ipv4=$IPV4"
 	fi
@@ -212,9 +213,13 @@ if [ -n "$OPT_IPV6" ]; then
 	fi
 fi
 
+if [ -n "$OPT_TTL" ]; then
+	QUERY_TTL="&ttl=$OPT_TTL"
+fi
+
 BASE_URL="https://${JFDDNS_DOMAIN}/update-by-query"
 URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
 
 QUERY_RECORD="&record_name=$OPT_RECORD"
 
-echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}" | curl -k -K -
+echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -k -K -
