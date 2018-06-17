@@ -120,7 +120,7 @@ _getopts() {
 }
 
 _get_external_ip() {
-	curl -fs "$1"
+	curl -s -f "$1"
 }
 
 ### ipv4 ###############################################################
@@ -230,4 +230,4 @@ URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
 
 QUERY_RECORD="&record_name=$OPT_RECORD"
 
-echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -k -K -
+echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -

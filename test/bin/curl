@@ -2,25 +2,25 @@
 
 case $@ in
 
-	'-fs http://v4.ident.me')
+	'-s -f http://v4.ident.me')
 		echo '1.2.3.4'
 		exit 0
 		;;
 
-	'-fs http://ipv4.myexternalip.com/raw')
+	'-s -f http://ipv4.myexternalip.com/raw')
 		exit 1
 		;;
 
-	'-fs http://v6.ident.me')
+	'-s -f http://v6.ident.me')
 		exit 1
 		;;
 
-	'-fs http://ipv6.myexternalip.com/raw')
+	'-s -f http://ipv6.myexternalip.com/raw')
 		echo '200c:6b7e:49e8:0::1'
 		exit 0
 		;;
 
-	'-k -K -')
+	'-s -k -K -')
 		read INPUT
 		echo "$INPUT"
 		exit 0
