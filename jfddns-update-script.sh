@@ -185,6 +185,7 @@ _get_ipv6_external() {
 _getopts $@
 shift $GETOPTS_SHIFT
 OPT_RECORD="$1"
+VALUE_RECORD="$OPT_RECORD"
 
 if [ -z "$OPT_RECORD" ]; then
 	echo "$USAGE"
@@ -197,33 +198,36 @@ if [ -z "$OPT_IPV4" ] && [ -z "$OPT_IPV6" ]; then
 fi
 
 if [ -n "$OPT_IPV4" ]; then
-	IPV4="$(_get_ipv4_external)"
-	IPV4="$(_check_ipv4 "$IPV4")"
-	if [ -n "$IPV4" ]; then
-		QUERY_IPV4="&ipv4=$IPV4"
+	VALUE_IPV4="$(_get_ipv4_external)"
+	VALUE_IPV4="$(_check_ipv4 "$VALUE_IPV4")"
+	if [ -n "$VALUE_IPV4" ]; then
+		QUERY_IPV4="&ipv4=$VALUE_IPV4"
 	fi
 fi
 
 if [ -n "$OPT_IPV6" ]; then
 	if [ -n "$OPT_DEVICE" ]; then
-		IPV6="$(_get_ipv6_internal)"
+		VALUE_IPV6="$(_get_ipv6_internal)"
 	fi
-	if [ -z "$IPV6" ]; then
-		IPV6="$(_get_ipv6_external)"
+	if [ -z "$VALUE_IPV6" ]; then
+		VALUE_IPV6="$(_get_ipv6_external)"
 	fi
-	IPV6="$(_check_ipv6 "$IPV6")"
-	if [ -n "$IPV6" ]; then
-		QUERY_IPV6="&ipv6=$IPV6"
+	VALUE_IPV6="$(_check_ipv6 "$VALUE_IPV6")"
+	if [ -n "$VALUE_IPV6" ]; then
+		QUERY_IPV6="&ipv6=$VALUE_IPV6"
 	fi
 fi
 
 if [ -n "$OPT_TTL" ]; then
-	QUERY_TTL="&ttl=$OPT_TTL"
+	VALUE_TTL="$OPT_TTL"
+	QUERY_TTL="&ttl=$VALUE_TTL"
 fi
 
 BASE_URL="https://${JFDDNS_DOMAIN}/update-by-query"
 URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
 
-QUERY_RECORD="&record_name=$OPT_RECORD"
+QUERY_RECORD="&record_name=$VALUE_RECORD"
 
 echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -
+
+echo "record_name: '${VALUE_RECORD}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"

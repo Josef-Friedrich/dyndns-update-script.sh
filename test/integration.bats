@@ -14,6 +14,7 @@ setup() {
 	run ./jfddns-update-script.sh lol
 	[ "$status" -eq 0 ]
 	[ "${lines[0]}" = "url=https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1" ]
+	[ "${lines[1]}" = "record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
 }
 
 @test "./jfddns-update-script.sh -d eth0 lol" {
