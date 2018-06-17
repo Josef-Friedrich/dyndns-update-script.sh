@@ -176,11 +176,9 @@ _get_ipv6() {
 
 ## This SEPARATOR is required for test purposes. Please don’t remove! ##
 
-
 _getopts $@
 shift $GETOPTS_SHIFT
 OPT_RECORD="$1"
-
 
 if [ -z "$OPT_RECORD" ]; then
 	echo "$USAGE"
