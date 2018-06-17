@@ -2,7 +2,7 @@
 
 JFDDNS_DOMAIN='dyndns.example.com'
 SECRET='12345678'
-ZONE='subdomain.example.com'
+ZONE='sub.example.com'
 
 
 # MIT License
