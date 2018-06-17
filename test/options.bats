@@ -99,6 +99,28 @@ setup() {
 	[ "$status" -eq 4 ]
 }
 
+# -S, --sleep
+
+@test "_getopts -S 123" {
+	_getopts -S 123
+	[ "$OPT_SLEEP" -eq 123 ]
+}
+
+@test "_getopts -S" {
+	run _getopts -S
+	[ "$status" -eq 3 ]
+}
+
+@test "_getopts --sleep=123" {
+	_getopts --sleep=123
+	[ "$OPT_SLEEP" -eq 123 ]
+}
+
+@test "_getopts --sleep" {
+	run _getopts --sleep
+	[ "$status" -eq 3 ]
+}
+
 # -t, --ttl
 
 @test "_getopts -t 123" {

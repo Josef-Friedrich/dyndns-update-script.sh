@@ -36,7 +36,7 @@ SHORT_DESCRIPTION='A shell script to update DNS records using the jfddns HTTP we
 NAME="jfddns-update-script.sh"
 USAGE="$NAME v$VERSION
 
-Usage: $NAME [-46dhstv] <record-name>
+Usage: $NAME [-46dhsStv] <record-name>
 
 $SHORT_DESCRIPTION
 
@@ -53,6 +53,8 @@ Options:
 	  Show this help message.
 	-s, --short-description
 	  Show a short description / summary.
+	-S, --sleep
+	  Sleep in seconds before execution.
 	-t, --ttl
 	  Time to live for updated record; e. g. “300”
 	-v, --version
@@ -74,7 +76,7 @@ http://ipv6.myexternalip.com/raw"
 # Missing argument: 3
 # No argument allowed: 4
 _getopts() {
-	while getopts ':46d:hst:v-:' OPT ; do
+	while getopts ':46d:hsS:t:v-:' OPT ; do
 		case $OPT in
 			4) OPT_IPV4=1 ;;
 			6) OPT_IPV6=1 ;;
@@ -82,6 +84,7 @@ _getopts() {
 			h) echo "$USAGE" ; exit 0 ;;
 			t) OPT_TTL="$OPTARG" ;;
 			s) echo "$SHORT_DESCRIPTION" ; exit 0 ;;
+			S) OPT_SLEEP="$OPTARG" ;;
 			v) echo "$VERSION" ; exit 0 ;;
 			\?) echo "Invalid option “-$OPTARG”!" >&2 ; exit 2 ;;
 			:) echo "Option “-$OPTARG” requires an argument!" >&2 ; exit 3 ;;
@@ -95,10 +98,11 @@ _getopts() {
 					device=?*) OPT_DEVICE="$LONG_OPTARG" ;;
 					help) echo "$USAGE" ; exit 0 ;;
 					short-description) echo "$SHORT_DESCRIPTION" ; exit 0 ;;
+					sleep=?*) OPT_SLEEP="$LONG_OPTARG" ;;
 					ttl=?*) OPT_TTL="$LONG_OPTARG" ;;
 					version) echo "$VERSION" ; exit 0 ;;
 
-					device*|ttl*)
+					device*|sleep*|ttl*)
 						echo "Option “--$OPTARG” requires an argument!" >&2
 						exit 3
 						;;
@@ -227,6 +231,11 @@ BASE_URL="https://${JFDDNS_DOMAIN}/update-by-query"
 URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
 
 QUERY_RECORD="&record_name=$VALUE_RECORD"
+
+if [ -n "$OPT_SLEEP" ]; then
+	echo "Delay the execution by $OPT_SLEEP seconds."
+	sleep $OPT_SLEEP
+fi
 
 echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -
 
