@@ -1,9 +1,8 @@
 #! /bin/sh
 
-JFDDNS_DOMAIN='dyndns.example.com'
-SECRET='123'
-ZONE='sub.example.com'
-
+VALUE_JFDDNS_DOMAIN='dyndns.example.com'
+VALUE_SECRET='123'
+VALUE_ZONE='sub.example.com'
 
 # MIT License
 #
@@ -227,8 +226,8 @@ if [ -n "$OPT_TTL" ]; then
 	QUERY_TTL="&ttl=$VALUE_TTL"
 fi
 
-BASE_URL="https://${JFDDNS_DOMAIN}/update-by-query"
-URL="$BASE_URL?zone_name=$ZONE&secret=$SECRET"
+BASE_URL="https://${VALUE_JFDDNS_DOMAIN}/update-by-query"
+URL="$BASE_URL?zone_name=${VALUE_ZONE}&secret=${VALUE_SECRET}"
 
 QUERY_RECORD="&record_name=$VALUE_RECORD"
 
