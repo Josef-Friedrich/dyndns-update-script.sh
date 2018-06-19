@@ -2,7 +2,7 @@
 
 VALUE_JFDDNS_DOMAIN='dyndns.example.com'
 VALUE_SECRET='123'
-VALUE_ZONE='sub.example.com'
+VALUE_ZONE_NAME='sub.example.com'
 
 # MIT License
 #
@@ -227,7 +227,7 @@ if [ -n "$OPT_TTL" ]; then
 fi
 
 BASE_URL="https://${VALUE_JFDDNS_DOMAIN}/update-by-query"
-URL="$BASE_URL?zone_name=${VALUE_ZONE}&secret=${VALUE_SECRET}"
+URL="$BASE_URL?zone_name=${VALUE_ZONE_NAME}&secret=${VALUE_SECRET}"
 
 QUERY_RECORD="&record_name=$VALUE_RECORD"
 
@@ -236,6 +236,7 @@ if [ -n "$OPT_SLEEP" ]; then
 	sleep $OPT_SLEEP
 fi
 
+echo "jfddns_domain: '${VALUE_RECORD}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_IPV6}'"
 echo "record_name: '${VALUE_RECORD}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
 
 echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -
