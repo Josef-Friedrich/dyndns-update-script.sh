@@ -191,7 +191,8 @@ OPT_RECORD_NAME="$1"
 VALUE_RECORD_NAME="$OPT_RECORD_NAME"
 
 if [ -z "$OPT_RECORD_NAME" ]; then
-	echo "$USAGE"
+	echo "Specify a record name!" >&2
+	echo "$USAGE" >&2
 	exit 17
 fi
 

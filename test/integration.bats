@@ -7,6 +7,7 @@ setup() {
 
 @test "./jfddns-update-script.sh" {
 	run ./jfddns-update-script.sh
+	[ "${lines[0]}" = "Specify a record name!" ]
 	[ "$status" -eq 17 ]
 }
 
