@@ -236,7 +236,7 @@ if [ -n "$OPT_SLEEP" ]; then
 	sleep $OPT_SLEEP
 fi
 
-echo "jfddns_domain: '${VALUE_RECORD}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_IPV6}'"
-echo "record_name: '${VALUE_RECORD}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
+echo "SCRIPT_VALUES: jfddns_domain: '${VALUE_JFDDNS_DOMAIN}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_SECRET}'"
+echo "PARAMETER: record_name: '${VALUE_RECORD}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
 
 echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -

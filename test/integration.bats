@@ -13,7 +13,8 @@ setup() {
 @test "./jfddns-update-script.sh lol" {
 	run ./jfddns-update-script.sh lol
 	[ "$status" -eq 0 ]
-	[ "${lines[1]}" = "record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
+	[ "${lines[0]}" = "SCRIPT_VALUES: jfddns_domain: 'dyndns.example.com', zone_name: 'sub.example.com', secret: '123'" ]
+	[ "${lines[1]}" = "PARAMETER: record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
 	[ "${lines[2]}" = "url=https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1" ]
 }
 
@@ -21,7 +22,7 @@ setup() {
 	run ./jfddns-update-script.sh -S 1 lol
 	[ "$status" -eq 0 ]
 	[ "${lines[0]}" = "Delay the execution by 1 seconds." ]
-	[ "${lines[2]}" = "record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
+	[ "${lines[2]}" = "PARAMETER: record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
 	[ "${lines[3]}" = "url=https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1" ]
 }
 
@@ -29,7 +30,7 @@ setup() {
 	run ./jfddns-update-script.sh --sleep=1 lol
 	[ "$status" -eq 0 ]
 	[ "${lines[0]}" = "Delay the execution by 1 seconds." ]
-	[ "${lines[2]}" = "record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
+	[ "${lines[2]}" = "PARAMETER: record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
 	[ "${lines[3]}" = "url=https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1" ]
 }
 
