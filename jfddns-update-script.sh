@@ -187,10 +187,10 @@ _get_ipv6_external() {
 
 _getopts $@
 shift $GETOPTS_SHIFT
-OPT_RECORD="$1"
-VALUE_RECORD="$OPT_RECORD"
+OPT_RECORD_NAME="$1"
+VALUE_RECORD_NAME="$OPT_RECORD_NAME"
 
-if [ -z "$OPT_RECORD" ]; then
+if [ -z "$OPT_RECORD_NAME" ]; then
 	echo "$USAGE"
 	exit 17
 fi
@@ -229,7 +229,7 @@ fi
 BASE_URL="https://${VALUE_JFDDNS_DOMAIN}/update-by-query"
 URL="$BASE_URL?zone_name=${VALUE_ZONE_NAME}&secret=${VALUE_SECRET}"
 
-QUERY_RECORD="&record_name=$VALUE_RECORD"
+QUERY_RECORD_NAME="&record_name=$VALUE_RECORD_NAME"
 
 if [ -n "$OPT_SLEEP" ]; then
 	echo "Delay the execution by $OPT_SLEEP seconds."
@@ -237,6 +237,6 @@ if [ -n "$OPT_SLEEP" ]; then
 fi
 
 echo "SCRIPT_VALUES: jfddns_domain: '${VALUE_JFDDNS_DOMAIN}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_SECRET}'"
-echo "PARAMETER: record_name: '${VALUE_RECORD}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
+echo "PARAMETER: record_name: '${VALUE_RECORD_NAME}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
 
-echo url="${URL}${QUERY_RECORD}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -
+echo url="${URL}${QUERY_RECORD_NAME}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -
