@@ -37,8 +37,14 @@ setup() {
 @test "./jfddns-update-script.sh lol" {
 	run ./jfddns-update-script.sh lol
 	[ "$status" -eq 0 ]
+	[ "${lines[0]}" = "IPV4: Query external site 'http://v4.ident.me' for an ipv4 address." ]
+	[ "${lines[1]}" = "IPV4: Got '1.2.3.4' from 'http://v4.ident.me'." ]
+	[ "${lines[2]}" = "IPV6: Query external site 'http://v6.ident.me' for an ipv6 address." ]
+	[ "${lines[3]}" = "IPV6: Query external site 'http://ipv6.myexternalip.com/raw' for an ipv6 address." ]
+	[ "${lines[4]}" = "IPV6: Got '200c:6b7e:49e8:0::1' from 'http://ipv6.myexternalip.com/raw'." ]
 	[ "${lines[5]}" = "SCRIPT_VALUES: jfddns_domain: 'dyndns.example.com', zone_name: 'sub.example.com', secret: '123'" ]
 	[ "${lines[6]}" = "PARAMETER: record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
+	[ "${lines[7]}" = "Try to update the DNS server using this url: 'https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1'." ]
 	[ "${lines[8]}" = "url=https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1" ]
 }
 

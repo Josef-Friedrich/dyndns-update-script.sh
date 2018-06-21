@@ -146,7 +146,7 @@ _check_ipv4() {
 _get_ipv4_external() {
 	local IP
 	for SITE in $IPV4_SITES; do
-		echo "IPV4: Query '$SITE' for an ipv4 address." 1>&2
+		echo "IPV4: Query external site '$SITE' for an ipv4 address." 1>&2
 		IP="$(_get_external_ip "$SITE")"
 		IP="$(_check_ipv4 "$IP")"
 		if [ -n "$IP" ]; then
@@ -184,7 +184,7 @@ _get_ipv6_internal() {
 _get_ipv6_external() {
 	local IP
 	for SITE in $IPV6_SITES; do
-		echo "IPV6: Query '$SITE' for an ipv6 address." 1>&2
+		echo "IPV6: Query external site '$SITE' for an ipv6 address." 1>&2
 		IP="$(_get_external_ip "$SITE")"
 		IP="$(_check_ipv6 "$IP")"
 		if [ -n "$IP" ]; then
