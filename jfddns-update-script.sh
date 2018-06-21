@@ -146,9 +146,11 @@ _check_ipv4() {
 _get_ipv4_external() {
 	local IP
 	for SITE in $IPV4_SITES; do
+		echo "IPV4: Query '$SITE' for an ipv4 address." 1>&2
 		IP="$(_get_external_ip "$SITE")"
 		IP="$(_check_ipv4 "$IP")"
 		if [ -n "$IP" ]; then
+			echo "IPV4: Got '$IP' from '$SITE'." 1>&2
 			break
 		fi
 	done
@@ -162,21 +164,31 @@ _check_ipv6() {
 }
 
 _get_ipv6_internal() {
+	local IP
 	if [ -z "$OPT_DEVICE" ] ; then
 		echo "No device given!" >&2
 		exit 9
 	fi
-	ip -6 addr list scope global "$OPT_DEVICE" | \
+	echo "IPV6: Query device '$OPT_DEVICE' for an ipv6 address." 1>&2
+
+	IP=$(ip -6 addr list scope global "$OPT_DEVICE" | \
 		grep -v " fd" | \
-		sed -n 's/.*inet6 \([0-9a-f:]\+\).*/\1/p' | head -n 1
+		sed -n 's/.*inet6 \([0-9a-f:]\+\).*/\1/p' | head -n 1)
+	IP="$(_check_ipv6 "$IP")"
+	if [ -n "$IP" ]; then
+		echo "IPV6: Got '$IP' from device '$OPT_DEVICE'." 1>&2
+		echo "$IP"
+	fi
 }
 
 _get_ipv6_external() {
 	local IP
 	for SITE in $IPV6_SITES; do
+		echo "IPV6: Query '$SITE' for an ipv6 address." 1>&2
 		IP="$(_get_external_ip "$SITE")"
 		IP="$(_check_ipv6 "$IP")"
 		if [ -n "$IP" ]; then
+			echo "IPV6: Got '$IP' from '$SITE'." 1>&2
 			break
 		fi
 	done
@@ -216,7 +228,6 @@ if [ -n "$OPT_IPV6" ]; then
 	if [ -z "$VALUE_IPV6" ]; then
 		VALUE_IPV6="$(_get_ipv6_external)"
 	fi
-	VALUE_IPV6="$(_check_ipv6 "$VALUE_IPV6")"
 	if [ -n "$VALUE_IPV6" ]; then
 		QUERY_IPV6="&ipv6=$VALUE_IPV6"
 	fi
@@ -240,4 +251,11 @@ fi
 echo "SCRIPT_VALUES: jfddns_domain: '${VALUE_JFDDNS_DOMAIN}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_SECRET}'"
 echo "PARAMETER: record_name: '${VALUE_RECORD_NAME}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
 
-echo url="${URL}${QUERY_RECORD_NAME}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}" | curl -s -k -K -
+URL="${URL}${QUERY_RECORD_NAME}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}"
+
+echo "Try to update the DNS server using this url: '$URL'."
+echo url="${URL}" | curl -s -k -K -
+
+if ! [ "$?" -eq 0 ]; then
+	echo "ERROR: curl exit with an non zero return code." >&2
+fi
