@@ -125,13 +125,15 @@ setup() {
 }
 
 @test "./jfddns-update-script.sh -v" {
+	source_exec jfddns-update-script.sh
 	run ./jfddns-update-script.sh -v
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "1.0" ]
+	[ "${lines[0]}" = "$VERSION" ]
 }
 
 @test "./jfddns-update-script.sh --version" {
+	source_exec jfddns-update-script.sh
 	run ./jfddns-update-script.sh --version
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "1.0" ]
+	[ "${lines[0]}" = "$VERSION" ]
 }

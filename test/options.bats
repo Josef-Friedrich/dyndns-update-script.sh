@@ -66,13 +66,13 @@ setup() {
 @test "_getopts -h" {
 	run _getopts -h
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "jfddns-update-script.sh v1.0" ]
+	[ "${lines[0]}" = "jfddns-update-script.sh v$VERSION" ]
 }
 
 @test "_getopts --help" {
 	run _getopts --help
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "jfddns-update-script.sh v1.0" ]
+	[ "${lines[0]}" = "jfddns-update-script.sh v$VERSION" ]
 }
 
 @test "_getopts --help=123" {
@@ -148,13 +148,13 @@ setup() {
 @test "_getopts -v" {
 	run _getopts -v
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "1.0" ]
+	[ "${lines[0]}" = "$VERSION" ]
 }
 
 @test "_getopts --version" {
 	run _getopts --version
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "1.0" ]
+	[ "${lines[0]}" = "$VERSION" ]
 }
 
 @test "_getopts --version=123" {

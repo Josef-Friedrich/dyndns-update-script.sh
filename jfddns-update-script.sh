@@ -28,7 +28,7 @@ VALUE_ZONE_NAME='sub.example.com'
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 FIRST_RELEASE=2018-06-16
-VERSION=1.0
+VERSION=1.1
 PROJECT_PAGES="https://github.com/Josef-Friedrich/jfddns-update-script.sh"
 SHORT_DESCRIPTION='A shell script to update DNS records using the jfddns HTTP web API.'
 
@@ -39,7 +39,8 @@ Usage: $NAME [-46dhsStv] <record-name>
 
 $SHORT_DESCRIPTION
 
-https://github.com/Josef-Friedrich/jfddns
+This script is a update script for jfddns  
+(https://github.com/Josef-Friedrich/jfddns).
 
 Options:
 	-4, --ipv4-only
