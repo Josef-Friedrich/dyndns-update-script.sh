@@ -2,7 +2,7 @@
 
 setup() {
 	. ./test/lib/test-helper.sh
-	source_exec jfddns-update-script.sh
+	source_exec dyndns-update-script.sh
 }
 
 # -4, --ipv4-only
@@ -66,13 +66,13 @@ setup() {
 @test "_getopts -h" {
 	run _getopts -h
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "jfddns-update-script.sh v$VERSION" ]
+	[ "${lines[0]}" = "dyndns-update-script.sh v$VERSION" ]
 }
 
 @test "_getopts --help" {
 	run _getopts --help
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = "jfddns-update-script.sh v$VERSION" ]
+	[ "${lines[0]}" = "dyndns-update-script.sh v$VERSION" ]
 }
 
 @test "_getopts --help=123" {
@@ -85,13 +85,13 @@ setup() {
 @test "_getopts -s" {
 	run _getopts -s
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = 'A shell script to update DNS records using the jfddns HTTP web API.' ]
+	[ "${lines[0]}" = 'A shell script to update DNS records using the dyndns HTTP web API.' ]
 }
 
 @test "_getopts --short-description" {
 	run _getopts --short-description
 	[ "$status" -eq 0 ]
-	[ "${lines[0]}" = 'A shell script to update DNS records using the jfddns HTTP web API.' ]
+	[ "${lines[0]}" = 'A shell script to update DNS records using the dyndns HTTP web API.' ]
 }
 
 @test "_getopts --short-description=123" {

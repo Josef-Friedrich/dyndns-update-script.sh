@@ -1,20 +1,20 @@
-[![Build Status](https://travis-ci.org/Josef-Friedrich/jfddns-update-script.sh.svg?branch=master)](https://travis-ci.org/Josef-Friedrich/jfddns-update-script.sh)
+[![Build Status](https://travis-ci.org/Josef-Friedrich/dyndns-update-script.sh.svg?branch=master)](https://travis-ci.org/Josef-Friedrich/dyndns-update-script.sh)
 
-# jfddns-update-script.sh
+# dyndns-update-script.sh
 
 
 ## Summary / Short description
 
-> A shell script to update DNS records using the jfddns HTTP web API.
+> A shell script to update DNS records using the dyndns HTTP web API.
 
 ## Usage
 
 ```
-Usage: jfddns-update-script.sh [-46dhrt] <record-name>
+Usage: dyndns-update-script.sh [-46dhrt] <record-name>
 
-A shell script to update DNS records using the jfddns HTTP web API.
+A shell script to update DNS records using the dyndns HTTP web API.
 
-https://github.com/Josef-Friedrich/jfddns
+https://github.com/Josef-Friedrich/dyndns
 
 Options:
 	-4, --ipv4-only
@@ -33,7 +33,7 @@ Options:
 
 ## Project pages
 
-* https://github.com/Josef-Friedrich/jfddns-update-script.sh
+* https://github.com/Josef-Friedrich/dyndns-update-script.sh
 
 ## Testing
 

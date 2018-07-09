@@ -2,7 +2,7 @@
 
 setup() {
 	. ./test/lib/test-helper.sh
-	source_exec jfddns-update-script.sh
+	source_exec dyndns-update-script.sh
 }
 
 @test "IPV4_SITES" {

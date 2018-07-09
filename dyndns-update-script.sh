@@ -1,6 +1,6 @@
 #! /bin/sh
 
-VALUE_JFDDNS_DOMAIN='dyndns.example.com'
+VALUE_dyndns_DOMAIN='dyndns.example.com'
 VALUE_SECRET='123'
 VALUE_ZONE_NAME='sub.example.com'
 
@@ -29,18 +29,18 @@ VALUE_ZONE_NAME='sub.example.com'
 
 FIRST_RELEASE=2018-06-16
 VERSION=1.1
-PROJECT_PAGES="https://github.com/Josef-Friedrich/jfddns-update-script.sh"
-SHORT_DESCRIPTION='A shell script to update DNS records using the jfddns HTTP web API.'
+PROJECT_PAGES="https://github.com/Josef-Friedrich/dyndns-update-script.sh"
+SHORT_DESCRIPTION='A shell script to update DNS records using the dyndns HTTP web API.'
 
-NAME="jfddns-update-script.sh"
+NAME="dyndns-update-script.sh"
 USAGE="$NAME v$VERSION
 
 Usage: $NAME [-46dhsStv] <record-name>
 
 $SHORT_DESCRIPTION
 
-This script is a update script for jfddns  
-(https://github.com/Josef-Friedrich/jfddns).
+This script is a update script for dyndns  
+(https://github.com/Josef-Friedrich/dyndns).
 
 Options:
 	-4, --ipv4-only
@@ -241,7 +241,7 @@ if [ -n "$OPT_TTL" ]; then
 	QUERY_TTL="&ttl=$VALUE_TTL"
 fi
 
-BASE_URL="https://${VALUE_JFDDNS_DOMAIN}/update-by-query"
+BASE_URL="https://${VALUE_dyndns_DOMAIN}/update-by-query"
 URL="$BASE_URL?zone_name=${VALUE_ZONE_NAME}&secret=${VALUE_SECRET}"
 
 QUERY_RECORD_NAME="&record_name=$VALUE_RECORD_NAME"
@@ -251,7 +251,7 @@ if [ -n "$OPT_SLEEP" ]; then
 	sleep $OPT_SLEEP
 fi
 
-echo "SCRIPT_VALUES: jfddns_domain: '${VALUE_JFDDNS_DOMAIN}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_SECRET}'"
+echo "SCRIPT_VALUES: dyndns_domain: '${VALUE_dyndns_DOMAIN}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_SECRET}'"
 echo "PARAMETER: record_name: '${VALUE_RECORD_NAME}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
 
 URL="${URL}${QUERY_RECORD_NAME}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}"
