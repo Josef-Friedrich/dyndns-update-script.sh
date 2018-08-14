@@ -1,6 +1,6 @@
 #! /bin/sh
 
-VALUE_dyndns_DOMAIN='dyndns.example.com'
+VALUE_DYNDNS_DOMAIN='dyndns.example.com'
 VALUE_SECRET='123'
 VALUE_ZONE_NAME='sub.example.com'
 
@@ -39,7 +39,7 @@ Usage: $NAME [-46dhsStv] <record-name>
 
 $SHORT_DESCRIPTION
 
-This script is a update script for dyndns  
+This script is a update script for dyndns
 (https://github.com/Josef-Friedrich/dyndns).
 
 Options:
@@ -241,7 +241,7 @@ if [ -n "$OPT_TTL" ]; then
 	QUERY_TTL="&ttl=$VALUE_TTL"
 fi
 
-BASE_URL="https://${VALUE_dyndns_DOMAIN}/update-by-query"
+BASE_URL="https://${VALUE_DYNDNS_DOMAIN}/update-by-query"
 URL="$BASE_URL?zone_name=${VALUE_ZONE_NAME}&secret=${VALUE_SECRET}"
 
 QUERY_RECORD_NAME="&record_name=$VALUE_RECORD_NAME"
@@ -251,7 +251,7 @@ if [ -n "$OPT_SLEEP" ]; then
 	sleep $OPT_SLEEP
 fi
 
-echo "SCRIPT_VALUES: dyndns_domain: '${VALUE_dyndns_DOMAIN}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_SECRET}'"
+echo "SCRIPT_VALUES: dyndns_domain: '${VALUE_DYNDNS_DOMAIN}', zone_name: '${VALUE_ZONE_NAME}', secret: '${VALUE_SECRET}'"
 echo "PARAMETER: record_name: '${VALUE_RECORD_NAME}', ipv4: '${VALUE_IPV4}', ipv6: '${VALUE_IPV6}', ttl: '${VALUE_TTL}'"
 
 URL="${URL}${QUERY_RECORD_NAME}${QUERY_IPV4}${QUERY_IPV6}${QUERY_TTL}"
