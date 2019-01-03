@@ -15,8 +15,16 @@ setup() {
 	curl -fs http://v4.ident.me
 }
 
-@test "test http://ipv4.myexternalip.com/raw" {
-	curl -fs http://ipv4.myexternalip.com/raw
+@test "test http://v4.ident.me" {
+	curl -fs http://v4.ident.me
+}
+
+@test "test http://ipv6.myexternalip.com/raw" {
+	curl -fs http://ipv6.myexternalip.com/raw
+}
+
+@test "test http://v6.ident.me" {
+	curl -fs http://v6.ident.me
 }
 
 @test "IPV6_SITES" {
