@@ -64,10 +64,10 @@ Options:
 # https://github.com/phoemur/ipgetter/blob/master/ipgetter.py
 
 IPV4_SITES="http://v4.ident.me
-http://ipv4.myexternalip.com/raw"
+http://v4.icanhazip.com"
 
 IPV6_SITES="http://v6.ident.me
-http://ipv6.myexternalip.com/raw"
+http://v6.icanhazip.com"
 
 # See https://stackoverflow.com/a/28466267
 

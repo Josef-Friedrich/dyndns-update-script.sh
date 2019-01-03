@@ -15,8 +15,8 @@ setup() {
 # 0: IPV4: Query 'http://v4.ident.me' for an ipv4 address.
 # 1: IPV4: Got '1.2.3.4' from 'http://v4.ident.me'.
 # 2: IPV6: Query 'http://v6.ident.me' for an ipv6 address.
-# 3: IPV6: Query 'http://ipv6.myexternalip.com/raw' for an ipv6 address.
-# 4: IPV6: Got '200c:6b7e:49e8:0::1' from 'http://ipv6.myexternalip.com/raw'.
+# 3: IPV6: Query 'http://v6.icanhazip.com' for an ipv6 address.
+# 4: IPV6: Got '200c:6b7e:49e8:0::1' from 'http://v6.icanhazip.com'.
 # 5: SCRIPT_VALUES: dyndns_domain: 'dyndns.example.com', zone_name: 'sub.example.com', secret: '123'
 # 6: PARAMETER: record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''
 # 7: Try to update the DNS server using this url: 'https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1'.
@@ -40,8 +40,8 @@ setup() {
 	[ "${lines[0]}" = "IPV4: Query external site 'http://v4.ident.me' for an ipv4 address." ]
 	[ "${lines[1]}" = "IPV4: Got '1.2.3.4' from 'http://v4.ident.me'." ]
 	[ "${lines[2]}" = "IPV6: Query external site 'http://v6.ident.me' for an ipv6 address." ]
-	[ "${lines[3]}" = "IPV6: Query external site 'http://ipv6.myexternalip.com/raw' for an ipv6 address." ]
-	[ "${lines[4]}" = "IPV6: Got '200c:6b7e:49e8:0::1' from 'http://ipv6.myexternalip.com/raw'." ]
+	[ "${lines[3]}" = "IPV6: Query external site 'http://v6.icanhazip.com' for an ipv6 address." ]
+	[ "${lines[4]}" = "IPV6: Got '200c:6b7e:49e8:0::1' from 'http://v6.icanhazip.com'." ]
 	[ "${lines[5]}" = "SCRIPT_VALUES: dyndns_domain: 'dyndns.example.com', zone_name: 'sub.example.com', secret: '123'" ]
 	[ "${lines[6]}" = "PARAMETER: record_name: 'lol', ipv4: '1.2.3.4', ipv6: '200c:6b7e:49e8:0::1', ttl: ''" ]
 	[ "${lines[7]}" = "Try to update the DNS server using this url: 'https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ipv6=200c:6b7e:49e8:0::1'." ]

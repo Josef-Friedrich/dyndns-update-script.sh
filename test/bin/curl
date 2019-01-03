@@ -7,7 +7,7 @@ case $@ in
 		exit 0
 		;;
 
-	'-s -f http://ipv4.myexternalip.com/raw')
+	'-s -f http://v4.icanhazip.com')
 		exit 1
 		;;
 
@@ -15,7 +15,7 @@ case $@ in
 		exit 1
 		;;
 
-	'-s -f http://ipv6.myexternalip.com/raw')
+	'-s -f http://v6.icanhazip.com')
 		echo '200c:6b7e:49e8:0::1'
 		exit 0
 		;;

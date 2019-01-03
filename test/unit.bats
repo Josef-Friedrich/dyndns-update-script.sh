@@ -15,17 +15,17 @@ setup() {
 	curl -fs http://v4.ident.me
 }
 
-@test "test http://v4.ident.me" {
-	curl -fs http://v4.ident.me
+@test "test http://v4.icanhazip.com" {
+	curl -fs http://v4.icanhazip.com
 }
 
-@test "test http://ipv6.myexternalip.com/raw" {
-	curl -fs http://ipv6.myexternalip.com/raw
-}
+# @test "test http://ipv6.myexternalip.com/raw" {
+#	curl -fs http://ipv6.myexternalip.com/raw
+# }
 
-@test "test http://v6.ident.me" {
-	curl -fs http://v6.ident.me
-}
+# @test "test http://v6.ident.me" {
+# 	curl -fs http://v6.ident.me
+# }
 
 @test "IPV6_SITES" {
 	if ! ping6 -c 1 ipv6.google.com > /dev/null 2>&1 ; then
