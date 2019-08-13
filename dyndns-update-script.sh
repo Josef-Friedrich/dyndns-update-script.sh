@@ -51,6 +51,8 @@ Options:
 	  The interface (device to look for an IP address), e. g. “eth0”
 	-h, --help
 	  Show this help message.
+	-p, --prefix-only
+	  Update the ipv6 prefix only.
 	-s, --short-description
 	  Show a short description / summary.
 	-S, --sleep
@@ -76,12 +78,13 @@ http://v6.icanhazip.com"
 # Missing argument: 3
 # No argument allowed: 4
 _getopts() {
-	while getopts ':46d:hsS:t:v-:' OPT ; do
+	while getopts ':46d:hpsS:t:v-:' OPT ; do
 		case $OPT in
 			4) OPT_IPV4=1 ;;
 			6) OPT_IPV6=1 ;;
 			d) OPT_DEVICE="$OPTARG" ;;
 			h) echo "$USAGE" ; exit 0 ;;
+			p) OPT_PREFIX=1 ;;
 			t) OPT_TTL="$OPTARG" ;;
 			s) echo "$SHORT_DESCRIPTION" ; exit 0 ;;
 			S) OPT_SLEEP="$OPTARG" ;;
@@ -97,6 +100,7 @@ _getopts() {
 					ipv6-only) OPT_IPV6=1 ;;
 					device=?*) OPT_DEVICE="$LONG_OPTARG" ;;
 					help) echo "$USAGE" ; exit 0 ;;
+          prefix-only) OPT_PREFIX=1 ;;
 					short-description) echo "$SHORT_DESCRIPTION" ; exit 0 ;;
 					sleep=?*) OPT_SLEEP="$LONG_OPTARG" ;;
 					ttl=?*) OPT_TTL="$LONG_OPTARG" ;;
@@ -107,7 +111,7 @@ _getopts() {
 						exit 3
 						;;
 
-					ipv4-only*|ipv6-only*|help*|short-description*|version*)
+					ipv4-only*|ipv6-only*|help*|prefix-only*|short-description*|version*)
 						echo "No argument allowed for the option “--$OPTARG”!" >&2
 						exit 4
 						;;
@@ -166,6 +170,43 @@ _check_ipv6() {
 	echo "$1" | grep -E '(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))'
 }
 
+# 200300e953ce9100 -> 2003:00e9:53ce:9100
+_format_ipv6_prefix() {
+  local PREFIX
+  PREFIX=$(echo "$1")
+  echo "$(echo "$PREFIX" | cut -b 1-4):$(echo "$PREFIX" | cut -b 5-8):$(echo "$PREFIX" | cut -b 9-12):$(echo "$PREFIX" | cut -b 13-16)"
+}
+
+# fe8000000000000032b5c2fffe756e17 02 40 20 80     eth0
+# fe8000000000000032b5c2fffe756e14 08 40 20 80    wlan0
+# 200300e953ce910032b5c2fffe756e17 02 40 00 00     eth0
+#
+# ->
+#
+# 2003:00e9:53ce:9100
+_get_ipv6_prefix_internal() {
+  local LINE LINES OLDIFS FIRST_CHAR
+  OLDIFS="$IFS"
+  IFS="
+"
+
+  if [ -z "$OPT_DEVICE" ] ; then
+		echo "No device given!" >&2
+		exit 9
+	fi
+  LINES="$(cat /proc/net/if_inet6 | grep "$OPT_DEVICE")"
+
+  for LINE in $LINES; do
+    FIRST_CHAR=$(echo "$LINE" | cut -b 1)
+    if [ "$FIRST_CHAR" != 'f' ]; then
+      break
+    fi
+  done
+  IFS="$OLDIFS"
+
+  echo "$(_format_ipv6_prefix "$(echo "$LINE" | cut -b 1-16)")"
+}
+
 _get_ipv6_internal() {
 	local IP
 	if [ -z "$OPT_DEVICE" ] ; then
@@ -209,6 +250,12 @@ if [ -z "$OPT_RECORD_NAME" ]; then
 	echo "Specify a record name!" >&2
 	echo "$USAGE" >&2
 	exit 17
+fi
+
+if [ -n "$OPT_PREFIX" ]; then
+  VALUE_PREFIX="$(_get_ipv6_prefix_internal)"
+  echo "PREFIX: ${VALUE_PREFIX}"
+  exit
 fi
 
 if [ -z "$OPT_IPV4" ] && [ -z "$OPT_IPV6" ]; then

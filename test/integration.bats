@@ -124,6 +124,12 @@ setup() {
 	[ "${lines[5]}" = "url=https://dyndns.example.com/update-by-query?zone_name=sub.example.com&secret=123&record_name=lol&ipv4=1.2.3.4&ttl=123" ]
 }
 
+@test "./dyndns-update-script.sh -p -d eth0 lol" {
+	run ./dyndns-update-script.sh -p -d eth0 lol
+	[ "$status" -eq 0 ]
+	[ "${lines[0]}" = "PREFIX: 2003:00e9:53ce:9100" ]
+}
+
 @test "./dyndns-update-script.sh -v" {
 	source_exec dyndns-update-script.sh
 	run ./dyndns-update-script.sh -v

@@ -80,6 +80,23 @@ setup() {
 	[ "$status" -eq 4 ]
 }
 
+# -p, --prefix-only
+
+@test "_getopts -p" {
+	_getopts -p
+	[ "$OPT_PREFIX" -eq 1 ]
+}
+
+@test "_getopts --prefix-only" {
+	_getopts --prefix-only
+	[ "$OPT_PREFIX" -eq 1 ]
+}
+
+@test "_getopts --prefix-only=123" {
+	run _getopts --prefix-only=123
+	[ "$status" -eq 4 ]
+}
+
 # -s, --short-description
 
 @test "_getopts -s" {
