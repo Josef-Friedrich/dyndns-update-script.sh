@@ -1,7 +1,15 @@
 #! /bin/sh
 
+# The domain over which the dyndns HTTP API is provided.
+# see .dyndns.yml or /etc/dyndns.yml: `dyndns_domain: dyndns.example.com`
 VALUE_DYNDNS_DOMAIN='dyndns.example.com'
+
+# see .dyndns.yml or /etc/dyndns.yml: `secret: '123'`
 VALUE_SECRET='123'
+
+# see .dyndns.yml or /etc/dyndns.yml:
+# zones:
+#  - name: dyndns.example.com
 VALUE_ZONE_NAME='sub.example.com'
 
 # MIT License
@@ -55,10 +63,13 @@ Options:
 	  Update only the ipv6 prefix.
 	-s, --short-description
 	  Show a short description / summary.
-	-S, --sleep
-	  Sleep in seconds before execution.
-	-t, --ttl
-	  Set the Time to Live for the updated record; e. g. “300”
+	-S, --sleep <seconds>
+	  Sleep some seconds before execution. If you have configured several
+	  calls via a cronjob you can use this option to avoid overloading the
+	  dyndns server.
+	-t, --ttl <seconds>
+	  Set the Time to Live entry for the updated record; e. g. “300”
+	  for 5 minutes
 	-v, --version
 	  Show the version number of this script.
 "
