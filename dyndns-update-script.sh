@@ -6,7 +6,7 @@ VALUE_ZONE_NAME='sub.example.com'
 
 # MIT License
 #
-# Copyright (c) 2018 Josef Friedrich <josef@friedrich.rocks>
+# Copyright (c) 2018-2021 Josef Friedrich <josef@friedrich.rocks>
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -44,21 +44,21 @@ This script is a update script for dyndns
 
 Options:
 	-4, --ipv4-only
-	  Update the ipv4 / A record only.
+	  Update only the ipv4 / A record.
 	-6, --ipv6-only
-	  Update the ipv6 / AAAA record only.
+	  Update only the ipv6 / AAAA record.
 	-d, --device
-	  The interface (device to look for an IP address), e. g. “eth0”
+	  The interface / device to look for an external IP address, e. g. “eth0”
 	-h, --help
 	  Show this help message.
 	-p, --prefix-only
-	  Update the ipv6 prefix only.
+	  Update only the ipv6 prefix.
 	-s, --short-description
 	  Show a short description / summary.
 	-S, --sleep
 	  Sleep in seconds before execution.
 	-t, --ttl
-	  Time to live for updated record; e. g. “300”
+	  Set the Time to Live for the updated record; e. g. “300”
 	-v, --version
 	  Show the version number of this script.
 "
